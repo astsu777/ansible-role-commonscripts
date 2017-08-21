@@ -1,0 +1,25 @@
+---
+- name: (DEBUG) Allow RSYNC for new super user without SUDO password
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    insertafter: '^%sudo'
+    line: "{{ user }} ALL=NOPASSWD: /usr/bin/rsync"
+
+- name: (CUSTOMSCRIPTS) Install custom scripts & executables
+  synchronize:
+    src: custom/
+    dest: "{{ customscripts_location }}"
+    links: yes
+    recursive: yes
+
+- name: (DEBUG) Disallow RSYNC for new super user without SUDO password
+  lineinfile:
+    path: /etc/sudoers
+    state: absent
+    line: "{{ user }} ALL=NOPASSWD: /usr/bin/rsync"
+
+- name: (CUSTOMSCRIPTS) Include the custom scripts to the PATH environment variable
+  lineinfile:
+    path: /home/{{ user }}/.bashrc
+    line: PATH="$PATH:{{ customscripts_location }}"

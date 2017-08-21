@@ -1,0 +1,6 @@
+---
+# Install custom scripts on remote machine
+- include: customscripts.yml
+
+# Install TestSSL (https://testssl.sh/)
+- include: testssl.yml

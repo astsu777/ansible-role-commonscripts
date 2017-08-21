@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Gaétan
+  description: Install custom scripts and tools for Linux
+
+  license: license (MIT, BSD)
+
+  min_ansible_version: 2.3
+
+  platforms:
+   - name: Linux
+     versions:
+     - all
+
+  galaxy_tags:
+    - tools
+    - linux
+    - scripts
+
+dependencies: []

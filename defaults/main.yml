@@ -1,0 +1,8 @@
+---
+# Default variables for this role
+
+# User used to transfer scripts and therefore who will get its PATH updated
+user: root
+
+# Folder where the custom scripts will be installed
+customscripts_location: /opt/bin/

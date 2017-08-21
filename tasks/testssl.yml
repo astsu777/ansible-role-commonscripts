@@ -1,0 +1,31 @@
+---
+- name: (TESTSSL) Ensure git is installed
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - git
+    - moreutils
+
+- name: (TESTSSL) Retrieve the latest version of TestSSL
+  git:
+    repo: https://github.com/drwetter/testssl.sh.git
+    dest: '{{ customscripts_location }}testssl.sh'
+    update: yes
+    clone: yes
+
+- name: (TESTSSL) Create symlink to beautify the command call
+  file:
+    src: '{{ customscripts_location }}testssl.sh/testssl.sh'
+    dest: '{{ customscripts_location }}testssl'
+    state: link
+    group: root
+    owner: root
+
+- name: (TESTSSL) Schedule the TestSSL auto-update from GitHub
+  cron:
+    name: Auto-Update testssl from GitHub
+    user: root
+    minute: 0
+    hour: 1
+    job: "cd {{ customscripts_location }}testssl.sh && git pull 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' >>  /var/log/cron/testssl_git_pull.log"
