@@ -21,7 +21,7 @@ The variables can be configured like this:
 
 ```
 user: root
-customscripts_location: /opt/bin
+customscripts_location: /opt/bin/
 ```
 
 These variables can either be configured as group_vars or host_vars.
