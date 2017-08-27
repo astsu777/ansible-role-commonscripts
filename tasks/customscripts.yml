@@ -10,7 +10,7 @@
     path: /etc/sudoers
     state: present
     insertafter: '^%sudo'
-    line: "{{ user }} ALL=NOPASSWD: /usr/bin/rsync"
+    line: "{{ ansible_user }} ALL=NOPASSWD: /usr/bin/rsync"
   changed_when: false
   when: not customscripts.stat.exists
 
@@ -26,7 +26,7 @@
   lineinfile:
     path: /etc/sudoers
     state: absent
-    line: "{{ user }} ALL=NOPASSWD: /usr/bin/rsync"
+    line: "{{ ansible_user }} ALL=NOPASSWD: /usr/bin/rsync"
   changed_when: false
   when: not customscripts.stat.exists
 

@@ -15,12 +15,11 @@ No specific requirements for this role.
 Role Variables
 --------------
 
-Two variables are used for this role: the user used to copy the custom scripts to the remote machine. The second variable is the location where the scripts will be stored.
+The only variable used for this role is the location where the scripts will be stored.
 
-The variables can be configured like this:
+The variable can be configured like this:
 
 ```
-user: root
 customscripts_location: /opt/bin/
 ```
 
