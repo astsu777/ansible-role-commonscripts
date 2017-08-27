@@ -1,10 +1,18 @@
 ---
+# Check if files exists before copying them
+- name: (CUSTOMSCRIPTS) Check if files already exist
+  stat:
+    path: /opt/bin
+  register: customscripts
+
 - name: (DEBUG) Allow RSYNC for new super user without SUDO password
   lineinfile:
     path: /etc/sudoers
     state: present
     insertafter: '^%sudo'
     line: "{{ user }} ALL=NOPASSWD: /usr/bin/rsync"
+  changed_when: false
+  when: not customscripts.stat.exists
 
 - name: (CUSTOMSCRIPTS) Install custom scripts & executables
   synchronize:
@@ -12,14 +20,27 @@
     dest: "{{ customscripts_location }}"
     links: yes
     recursive: yes
+  when: not customscripts.stat.exists
 
 - name: (DEBUG) Disallow RSYNC for new super user without SUDO password
   lineinfile:
     path: /etc/sudoers
     state: absent
     line: "{{ user }} ALL=NOPASSWD: /usr/bin/rsync"
+  changed_when: false
+  when: not customscripts.stat.exists
 
 - name: (CUSTOMSCRIPTS) Include the custom scripts to the PATH environment variable
   lineinfile:
     path: /home/{{ user }}/.bashrc
     line: PATH="$PATH:{{ customscripts_location }}"
+  when: not customscripts.stat.exists
+
+- name: (CUSTOMSCRIPTS) Define the proper rights and owner
+  file:
+    path: /opt/bin
+    recurse: yes
+    owner: root
+    group: root
+    mode: 0755
+  when: not customscripts.stat.exists
