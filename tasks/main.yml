@@ -3,4 +3,4 @@
 - include_tasks: customscripts.yml
 
 # Install TestSSL (https://testssl.sh/)
-- include_tasks: testssl.yml
+#- include_tasks: testssl.yml

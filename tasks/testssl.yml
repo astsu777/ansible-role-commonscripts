@@ -28,4 +28,4 @@
     user: root
     minute: 0
     hour: 1
-    job: "cd {{ customscripts_location }}testssl.sh && git pull 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' >>  /var/log/cron/testssl_git_pull.log"
+    job: "cd {{ customscripts_location }}testssl.sh && git pull 2>&1 | ts '[%Y-%m-%d %H:%M:%S]' >>  /var/log/cronjobs/testssl_git_pull.log"
